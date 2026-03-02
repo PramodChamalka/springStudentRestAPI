@@ -3,10 +3,7 @@ package com.pramod.student_management.controller;
 import com.pramod.student_management.entity.Student;
 import com.pramod.student_management.repository.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -30,9 +27,18 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping("/student/add")
+    @PostMapping("/student/add")
     public void createStudent(@RequestBody Student student){
         repo.save(student);
 
+    }
+
+    @PutMapping("student/update/{id}")
+    public Student updateStudent(@PathVariable int id){
+        Student student = repo.findById(id).get();
+        student.setName("Poornima");
+        student.setPercentage(78);
+        repo.save(student);
+        return student;
     }
 }
